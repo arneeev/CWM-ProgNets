@@ -3,17 +3,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # parameters to modify
-filename="test.data"
-label='label'
-xlabel = 'xlabel'
-ylabel = 'ylabel'
-title='Simple plot'
-fig_name='test.png'
+filename="pingprocessed.data"
+label='ping'
+ylabel = 'ping test number'
+xlabel = 'time (ms)'
+title='Ping, 0.01s interval'
+fig_name='ping0.01.png'
 
 
 t = np.loadtxt(filename, delimiter=" ", dtype="float")
-
-plt.plot(t[:,0], t[:,1], label=label)  # Plot some data on the (implicit) axes.
+k = np.array(range(1, 1001))
+plt.plot(k, t, label=label)  # Plot some data on the (implicit) axes.
 plt.xlabel(xlabel)
 plt.ylabel(ylabel)
 plt.title(title)
