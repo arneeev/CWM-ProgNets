@@ -16,13 +16,16 @@ header ethernet_t {
 }
 
 header trade_t {
-    bit<8> order;
-    bit<8> price;
-    bit<8> res;
+    bit<8> p;
+    bit<8> four;
+    bit<8> version;
+    bit<32> order;
+    bit<32> price;
+    bit<32> res;
     }
 
 header current_t {
-    bit<8> current_price;
+    bit<32> current_price;
 
 }
 
@@ -49,13 +52,13 @@ parser MyParser(packet_in packet,
         /* TODO: add parser logic */
         packet.extract(hdr.ethernet);
         transition select(hdr.ethernet.etherType) {
-            0x800: parse_trade;
+            0x1234: parse_trade;
             default:accept;
         }
     }
     
     state parse_trade {
-    	packet.extract(hdr.ethernet);
+    	packet.extract(hdr.trade);
     	transition accept;
     }
 }
@@ -79,7 +82,7 @@ control MyIngress(inout headers hdr,
                   inout standard_metadata_t standard_metadata) {
 
     
-    action send_back(bit<8> result) {
+    action send_back(bit<32> result) {
         /* TODO
          * - put the result back in hdr.p4calc.res
          * - swap MAC addresses in hdr.ethernet.dstAddr and
